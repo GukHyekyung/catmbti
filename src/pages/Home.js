@@ -19,6 +19,7 @@ const Home = () => {
         <Title>나에게 맞는 주인님은?</Title>
         <LogoImage>
           <img
+            alt="고양이사진"
             src={PangImage}
             className="rounded-circle"
             width={350}

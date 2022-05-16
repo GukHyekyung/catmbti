@@ -5,7 +5,6 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Question from "./pages/Question";
 import Result from "./pages/Result";
-import logo from "./logo.svg";
 
 function App() {
   return (
