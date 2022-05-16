@@ -3,22 +3,75 @@ import { Button, ProgressBar } from "react-bootstrap";
 import { QuestionDate } from "../assets/date/questiondate";
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Question = () => {
+  const [questionNo, setQuestionNo] = React.useState(0);
+  const [totalScore, setTotalScore] = React.useState([
+    { id: "EI", score: 0 },
+    { id: "SN", score: 0 },
+    { id: "TF", score: 0 },
+    { id: "JP", score: 0 },
+  ]);
+  const navigate = useNavigate();
+
+  const handleClickButton = (no, type) => {
+    const newScore = totalScore.map((s) =>
+      s.id === type ? { id: s.id, score: s.score + no } : s
+    );
+
+    setTotalScore(newScore);
+    // 예외처리: 문제수보다 높을 때 결과페이지 이동
+    if (QuestionDate.length !== questionNo + 1) {
+      // 다음문제로 문제수 증가
+      setQuestionNo(questionNo + 1);
+    } else {
+      // 결과페이지 이동
+      navigate("/result");
+    }
+
+    // if (type === "EI") {
+    //   // 기존 스코어에 더할 값을 계산 (기존의 값 + 배점)
+    //   const addScore = totalScore[0].score + no;
+    //   // 새로운 객체
+    //   const newObject = { id: "EI", score: addScore };
+    //   // splice 통해 새로운 객체를 해당객체 자리에 넣어줌
+    //   totalScore.splice(0, 1, newObject);
+    // } else if (type === "SN") {
+    //   const addScore = totalScore[1].score + no;
+    //   const newObject = { id: "SN", score: addScore };
+    //   totalScore.splice(1, 1, newObject);
+    // } else if (type === "TF") {
+    //   const addScore = totalScore[2].score + no;
+    //   const newObject = { id: "TF", score: addScore };
+    //   totalScore.splice(2, 1, newObject);
+    // } else {
+    //   const addScore = totalScore[3].score + no;
+    //   const newObject = { id: "JP", score: addScore };
+    //   totalScore.splice(3, 1, newObject);
+    // }
+
+    setQuestionNo(questionNo + 1);
+  };
+
   return (
     <Wrapper>
       <ProgressBar
         striped
         variant="danger"
-        now={80}
+        now={(questionNo / QuestionDate.length) * 100}
         style={{ marginTop: "20px" }}
       />
-      <Title>{QuestionDate[0].title}</Title>
+      <Title>{QuestionDate[questionNo].title}</Title>
       <ButtonGroup>
-        <Button style={{ width: "40%", minHeight: "200px", fontSize: "15pt" }}>
-          {QuestionDate[0].answera}
+        <Button
+          onClick={() => handleClickButton(0, QuestionDate[questionNo].type)}
+          style={{ width: "40%", minHeight: "200px", fontSize: "15pt" }}
+        >
+          {QuestionDate[questionNo].answera}
         </Button>
         <Button
+          onClick={() => handleClickButton(1, QuestionDate[questionNo].type)}
           style={{
             width: "40%",
             minHeight: "200px",
@@ -26,7 +79,7 @@ const Question = () => {
             marginLeft: "20px",
           }}
         >
-          {QuestionDate[0].answerb}
+          {QuestionDate[questionNo].answerb}
         </Button>
       </ButtonGroup>
     </Wrapper>
