@@ -1,9 +1,9 @@
 import { Button, ProgressBar } from "react-bootstrap";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 import { QuestionData } from "../assets/date/questiondata";
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 const Question = () => {
   const [questionNo, setQuestionNo] = React.useState(0);
@@ -21,13 +21,25 @@ const Question = () => {
     );
 
     setTotalScore(newScore);
-    // 예외처리: 문제수보다 높을 때 결과페이지 이동
+
     if (QuestionData.length !== questionNo + 1) {
       // 다음문제로 문제수 증가
       setQuestionNo(questionNo + 1);
     } else {
-      // 결과페이지 이동
-      navigate("/result");
+      // mbti도출
+      const mbti = newScore.reduce(
+        (acc, curr) =>
+          acc +
+          (curr.score >= 2 ? curr.id.substring(0, 1) : curr.id.substring(1, 2)),
+        ""
+      );
+      // 결과 페이지 이동
+      navigate({
+        pathname: "/result",
+        search: `?${createSearchParams({
+          mbti: mbti,
+        })}`,
+      });
     }
 
     // if (type === "EI") {
@@ -50,8 +62,6 @@ const Question = () => {
     //   const newObject = { id: "JP", score: addScore };
     //   totalScore.splice(3, 1, newObject);
     // }
-
-    setQuestionNo(questionNo + 1);
   };
 
   return (
@@ -65,13 +75,13 @@ const Question = () => {
       <Title>{QuestionData[questionNo].title}</Title>
       <ButtonGroup>
         <Button
-          onClick={() => handleClickButton(0, QuestionData[questionNo].type)}
+          onClick={() => handleClickButton(1, QuestionData[questionNo].type)}
           style={{ width: "40%", minHeight: "200px", fontSize: "15pt" }}
         >
           {QuestionData[questionNo].answera}
         </Button>
         <Button
-          onClick={() => handleClickButton(1, QuestionData[questionNo].type)}
+          onClick={() => handleClickButton(0, QuestionData[questionNo].type)}
           style={{
             width: "40%",
             minHeight: "200px",

@@ -1,12 +1,21 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
-import PangImage from "../assets/ggompang.jpeg";
 import React from "react";
 import { ResultData } from "../assets/date/resultdata";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 const Result = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const mbti = searchParams.get("mbti");
+  // 최종적으로 도출한 결과 객체
+  const [resultData, setResultData] = React.useState({});
+
+  React.useEffect(() => {
+    const result = ResultData.find((s) => s.best === mbti);
+    setResultData(result);
+  }, [mbti]);
 
   return (
     <Wrapper>
@@ -15,15 +24,13 @@ const Result = () => {
         <Title>결과 보기</Title>
         <LogoImage>
           <img
-            src={ResultData[0].image}
+            src={resultData.image}
             className="rounded-circle"
             width={350}
             height={350}
           />
         </LogoImage>
-        <Desc>
-          예비 집사님과 찰떡궁합인 고양이는 {ResultData[0].name}입니다.
-        </Desc>
+        <Desc>예비 집사님과 찰떡궁합인 고양이는 {resultData.name}입니다.</Desc>
         <Button
           style={{ fontFamily: "EF_Diary(윈도우용TTF)" }}
           onClick={() => navigate("/")}
