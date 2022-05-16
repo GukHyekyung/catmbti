@@ -2,10 +2,16 @@ import Button from "react-bootstrap/Button";
 import PangImage from "../assets/ggompang.jpeg";
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 // css-in-js
 
 const Home = () => {
+  const navigate = useNavigate();
+  const handleClickButton = () => {
+    // usehistory
+    navigate("/question");
+  };
   return (
     <Wrapper>
       <Header>예비집사 판별기</Header>
@@ -20,7 +26,12 @@ const Home = () => {
           />
         </LogoImage>
         <Desc>MBTI를 기반으로 하는 나랑 잘맞는 고양이 찾기!</Desc>
-        <Button>테스트 시작하기</Button>
+        <Button
+          style={{ fontFamily: "EF_Diary(윈도우용TTF)" }}
+          onClick={handleClickButton}
+        >
+          테스트 시작하기
+        </Button>
       </Contents>
     </Wrapper>
   );
@@ -38,6 +49,7 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "EF_Diary(윈도우용TTF)";
 `;
 
 const Contents = styled.div`
@@ -45,6 +57,7 @@ const Contents = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  font-family: "EF_Diary(윈도우용TTF)";
 `;
 
 const Title = styled.div`
@@ -59,4 +72,5 @@ const LogoImage = styled.div`
 const Desc = styled.div`
   font-size: 20pt;
   margin-top: 20px;
+  font-family: "EF_Diary(윈도우용TTF)";
 `;

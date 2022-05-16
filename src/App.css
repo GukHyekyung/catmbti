@@ -1,0 +1,8 @@
+.App {
+  font-family: "EF_Diary(윈도우용TTF)";
+}
+
+@font-face {
+  font-family: "EF_Diary(윈도우용TTF)";
+  src: url(/src/assets/fonts/EF_Diary\(윈도우용TTF\).ttf);
+}
