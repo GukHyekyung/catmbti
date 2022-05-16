@@ -1,6 +1,6 @@
 import { Button, ProgressBar } from "react-bootstrap";
 
-import { QuestionDate } from "../assets/date/questiondate";
+import { QuestionData } from "../assets/date/questiondata";
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ const Question = () => {
 
     setTotalScore(newScore);
     // 예외처리: 문제수보다 높을 때 결과페이지 이동
-    if (QuestionDate.length !== questionNo + 1) {
+    if (QuestionData.length !== questionNo + 1) {
       // 다음문제로 문제수 증가
       setQuestionNo(questionNo + 1);
     } else {
@@ -59,19 +59,19 @@ const Question = () => {
       <ProgressBar
         striped
         variant="danger"
-        now={(questionNo / QuestionDate.length) * 100}
+        now={(questionNo / QuestionData.length) * 100}
         style={{ marginTop: "20px" }}
       />
-      <Title>{QuestionDate[questionNo].title}</Title>
+      <Title>{QuestionData[questionNo].title}</Title>
       <ButtonGroup>
         <Button
-          onClick={() => handleClickButton(0, QuestionDate[questionNo].type)}
+          onClick={() => handleClickButton(0, QuestionData[questionNo].type)}
           style={{ width: "40%", minHeight: "200px", fontSize: "15pt" }}
         >
-          {QuestionDate[questionNo].answera}
+          {QuestionData[questionNo].answera}
         </Button>
         <Button
-          onClick={() => handleClickButton(1, QuestionDate[questionNo].type)}
+          onClick={() => handleClickButton(1, QuestionData[questionNo].type)}
           style={{
             width: "40%",
             minHeight: "200px",
@@ -79,7 +79,7 @@ const Question = () => {
             marginLeft: "20px",
           }}
         >
-          {QuestionDate[questionNo].answerb}
+          {QuestionData[questionNo].answerb}
         </Button>
       </ButtonGroup>
     </Wrapper>
