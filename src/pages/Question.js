@@ -73,6 +73,7 @@ const Question = () => {
         style={{ marginTop: "20px" }}
       />
       <Title>{QuestionData[questionNo].title}</Title>
+      <br />
       <ButtonGroup>
         <Button
           onClick={() => handleClickButton(1, QuestionData[questionNo].type)}
